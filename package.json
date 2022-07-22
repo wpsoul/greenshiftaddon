@@ -1,0 +1,20 @@
+{
+  "name": "greenshiftaddon",
+  "version": "1.0.0",
+  "description": "Greenshift Addon example",
+  "main": "index.js",
+  "devDependencies": {
+    "@wordpress/scripts": "^20.0.1"
+  },
+  "dependencies": {},  
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "check-engines": "wp-scripts check-engines",
+    "packages-update": "wp-scripts packages-update",
+    "lint:js": "wp-scripts lint-js",
+    "lint:style": "wp-scripts lint-style"
+  },
+  "author": "Wpsoul",
+  "license": "ISC"
+}

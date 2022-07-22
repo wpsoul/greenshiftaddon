@@ -1,0 +1,32 @@
+/*Swatches*/
+body .gs-var-selector input{margin:0;padding:0;-webkit-appearance:none;-moz-appearance:none;appearance:none;visibility: hidden;width:0}
+body .gs-var-selector input:active +.gs-var-label{opacity: .9;}
+body .gs-var-selector input:checked +.gs-var-label{-webkit-filter: none;-moz-filter: none;filter: none;opacity: .5;border: 1px solid #f00;}
+body .gs-var-label{ cursor:pointer;background-size:contain;background-repeat:no-repeat;display:inline-block; line-height:20px; font-size:90%;-webkit-transition: all 100ms ease-in;transition: all 100ms ease-in;text-align: center;vertical-align: text-bottom;margin-right: 5px;border: 1px solid #ddd}
+body .gs-var-label.text-label-gs{padding: 3px 8px; min-width:50px; font-weight:normal}.gs-var-label.image-label-gs{height:50px; width: 50px;background-position: center center; background-size:80%}.gs-var-label.color-label-gs{height:25px; width: 25px; border-radius: 50%}
+body .gs-var-label.image-label-gs.label-non-selectable{border: none}
+body .gs-var-label:hover{border: 1px solid #333}.gs-var-label.gshidden{opacity: 0.1; cursor: none; pointer-events: none}
+body .gs-var-label.label-non-selectable{cursor: none; pointer-events: none;}
+body .gs-var-label.label-non-selectable:not(.text-label-gs), .gs-var-label.label-non-selectable:not(.text-label-gs):hover{cursor: default;} .gs_swatch_getter.gs-var-label.image-label-gs{width: 35px; height: 35px}
+body .gs-var-label.image_tag-label-gs {padding: 6px;display: inline-flex;align-items: center; font-weight:normal !important;}
+body .gs-var-label.image_tag-label-gs span.img-bg{width: 50px;height: 50px;margin-right: 5px;background-position: center center;background-size: 80%;background-repeat: no-repeat;}
+body .woocommerce-group-attributes-public{width:100%}
+body .woocommerce-group-attributes-public .attribute_group_row{text-align: left;}
+body .woocommerce-group-attributes-public .attribute_group_name{padding: 8px 16px;background-color: #f2f2f2;font-size: 110%;color: #333}
+.woocommerce div.product form.cart .variations th,
+.woocommerce table.shop_attributes th {
+    text-align: left;
+}
+.woocommerce div.product form.cart .variations th {
+    vertical-align: top;
+}
+
+.woocommerce div.product form.cart .variations tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.woocommerce div.product form.cart .variations tbody tr th,
+.woocommerce div.product form.cart .variations tbody tr td {
+    flex-basis: 100%;
+}
