@@ -5,6 +5,11 @@ const { collectionsObjects } = gspblib.helpers;
  * Set the block attributes
  * @type {Object}
  */
+const defaultIcon = JSON.parse(JSON.stringify(collectionsObjects.iconPicker));
+defaultIcon.icon.font = 'rhicon rhi-shopping-bag';
+defaultIcon.fill = 'currentColor';
+defaultIcon.fillhover = 'currentColor';
+defaultIcon.iconSize = [16];
 
 export default {
     id: {
@@ -50,24 +55,38 @@ export default {
         type: 'object',
         default: collectionsObjects.typography,
     },
+    blockWidth: {
+		type: 'object',
+		default: collectionsObjects.blockWidth
+	},
     align: {
         type: 'string',
         default: '',
-    },     
+    },
     titleTag: {
         type: 'string',
         default: '',
-    },     
+    },
     customcolor: {
         type: 'string',
         default: '#ff0000',
-    }, 
+    },
     size: {
         type: 'array',
-        default: [200, null, null, null ],
+        default: [200],
     },
     sizeUnit: {
         type: 'array',
-        default: ['px', 'px', 'px', 'px' ],
-    },    
+        default: ['px', 'px', 'px', 'px'],
+    },
+    iconBox_icon: {
+        type: 'object',
+        default: defaultIcon,
+    },
+    enableicon: {
+        type: 'boolean',
+    },
+    selecttype: {
+        type: 'string',
+    }  
 };

@@ -1,0 +1,34 @@
+import { __ } from '@wordpress/i18n';
+import { useBlockProps } from '@wordpress/block-editor';
+const { AnimationRenderProps } = gspblib.collections;
+const { IconViewer } = gspblib.components;
+
+function save(props) {
+	const {
+		customcolor, id, animation, enableicon
+	} = props.attributes;
+
+	let blockId = `gspb_id-${id}`;
+	const blockProps = useBlockProps.save({
+		className: `gspb-examplebox ${blockId}`
+	});
+
+	//Render Animation Properties
+	let AnimationProps = {};
+	AnimationProps = AnimationRenderProps(animation);
+
+	return (
+		<>
+			<div {...blockProps} {...AnimationProps}>
+				<span className="gspb_example_value">{customcolor}</span>
+				{enableicon &&
+					<span className="gspb_example_icon">
+						<IconViewer attributeName="iconBox_icon" size={16} color={"#565D66"} {...props} />
+					</span>
+				}
+			</div>
+		</>
+	);
+}
+
+export default save;

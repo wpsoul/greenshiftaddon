@@ -4,9 +4,11 @@
   "description": "Greenshift Addon example",
   "main": "index.js",
   "devDependencies": {
-    "@wordpress/scripts": "^20.0.1"
+    "@wordpress/scripts": "^24.6"
   },
-  "dependencies": {},  
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "scripts": {
     "start": "wp-scripts start",
     "build": "wp-scripts build",

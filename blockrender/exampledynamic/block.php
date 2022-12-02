@@ -5,7 +5,7 @@ namespace greenshiftaddon\Blocks;
 defined('ABSPATH') OR exit;
 
 
-class Examplebox{
+class Renderbox{
 
 	public function __construct(){
 		add_action('init', array( $this, 'init_handler' ));
@@ -34,7 +34,7 @@ class Examplebox{
 		),
 		'customcolor'       => array(
 			'type'    => 'string',
-			'default' => '',
+			'default' => '#ff0000',
 		),
 		'align'       => array(
 			'type'    => 'string',
@@ -56,4 +56,4 @@ class Examplebox{
 	}
 }
 
-new Examplebox;
+new Renderbox;

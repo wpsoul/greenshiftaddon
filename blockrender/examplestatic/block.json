@@ -1,0 +1,6 @@
+{
+	"apiVersion": 2,
+	"name": "greenshift-blocks/examplestatic",
+	"title": "Example Static Block",
+	"category":"greenShiftAddon"
+}

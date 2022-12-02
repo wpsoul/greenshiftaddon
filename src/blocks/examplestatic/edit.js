@@ -1,8 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { InspectorControls, AlignmentToolbar, BlockControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import { InspectorControls, AlignmentToolbar, BlockControls, useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
 import { isEqual } from 'lodash';
+import { rtransform, ttransform, svgtransform, svgdraw, staggertransform, svgmorph, batchicon } from "./icons.js";
 import attributesDefault from './attributes';
 
 // Import greenshift dependencies
@@ -16,7 +17,9 @@ const {
 	Responsive,
 	Shadow,
 	Border,
+	BlockWidth,
 	Background,
+	IconPicker,
 	Typography
 } = gspblib.collections;
 
@@ -26,24 +29,28 @@ const {
 	aos_animation_cssGen,
 	gspb_spacing_cssGen,
 	gspb_responsive_cssGen,
+	gspb_width_cssGen,
 	gspb_shadow_cssGen,
 	gspb_border_cssGen,
+	gspb_iconPicker_cssGen,
 	gspb_background_cssGen,
 	gspb_typography_cssGen,
 
 	gspb_Css_Final
 } = gspblib.utilities;
-const { CssUnits, Devices, InspectorTabs, InspectorTab, BlpgeColorPicker, RadioAdvanced } = gspblib.components;
+const { CssUnits, Devices, InspectorTabs, InspectorTab, BlpgeColorPicker, RadioAdvanced, StylesforBlock, GsbpFormLabel } = gspblib.components;
 const { gspb_cssGen } = gspblib.helpers;
 const { AnimationWrapper, AnimationRenderProps } = gspblib.collections;
 const { gspb_getDeviceStateIndex } = gspblib.utilities;
+const { IconViewer } = gspblib.components;
+const { gspb_inherit_values } = gspblib.helpers;
 
 function edit(props) {
 
-	const { attributes, setAttributes, className, clientId } = props;
+	const { attributes, setAttributes, clientId } = props;
 	const {
-		id, csstransform, position, animation, spacing, responsive, shadow, border, background, typography,
-		customcolor, align, titleTag,
+		id, csstransform, position, animation, spacing, responsive, shadow, border, background, typography, blockWidth,
+		customcolor, align, titleTag, iconBox_icon, enableicon, selecttype,
 		size, sizeUnit
 
 	} = attributes;
@@ -56,25 +63,28 @@ function edit(props) {
 	const ALIGNMENT_CONTROLS = [
 		{
 			icon: 'editor-alignleft',
-			title: __('Align Text Left', 'greenshift'),
+			title: __('Align Text Left', 'greenshiftaddon'),
 			align: 'flex-start',
 		},
 		{
 			icon: 'editor-aligncenter',
-			title: __('Align Text Center', 'greenshift'),
+			title: __('Align Text Center', 'greenshiftaddon'),
 			align: 'center',
 		},
 		{
 			icon: 'editor-alignright',
-			title: __('Align Text Right', 'greenshift'),
+			title: __('Align Text Right', 'greenshiftaddon'),
 			align: 'flex-end',
 		}
 	];
 
 	gspb_setBlockId(props);
 	let blockId = `gspb_id-${id}`;
-	let blockClassName = `gspb-examplebox ${blockId} ${className}`;
-	let css_selector_by_user = `#${blockId}`;
+	let css_selector_by_user = `.${blockId}`;
+
+	const blockProps = useBlockProps({
+		className: `gspb-examplebox ${blockId}`
+	});
 
 	//Render Animation Properties
 	let AnimationProps = {};
@@ -86,6 +96,17 @@ function edit(props) {
 
 	// Final CSS for the block
 	let final_css = '';
+
+	//Align
+	final_css = gspb_cssGen(
+		`${css_selector_by_user}`,
+		['display', 'justify-content'],
+		[
+			["flex"],
+			[align]
+		],
+		final_css
+	);
 
 	// Css transform
 	final_css = gspb_csstransform_cssGen(
@@ -123,6 +144,13 @@ function edit(props) {
 		final_css,
 	);
 
+	// blockWidth
+	final_css = gspb_width_cssGen(
+		blockWidth,
+		`${css_selector_by_user}`,
+		final_css,
+	);
+
 	// Shadow
 	final_css = gspb_shadow_cssGen(
 		shadow,
@@ -152,10 +180,25 @@ function edit(props) {
 		final_css
 	);
 
+	//Icon 
+	let iconPiccker_object = JSON.parse(JSON.stringify(iconBox_icon));
+	const iconType = iconPiccker_object.type;
+	let iconSelector = 'svg';
+	if (iconType === 'image') {
+		iconSelector = 'img';
+	}
+	if (enableicon) {
+		final_css = gspb_iconPicker_cssGen(
+			iconPiccker_object,
+			`${css_selector_by_user} .gspb_example_icon ${iconSelector}`,
+			final_css
+		);
+	}
+
 	// Width example with responsive options
 	final_css = gspb_cssGen(
 		`${css_selector_by_user} .gspb_example_value`,
-		['width'],
+		['width', 'display'],
 		[
 			[
 				[size[0], sizeUnit[0]],
@@ -163,6 +206,7 @@ function edit(props) {
 				[size[2], sizeUnit[2]],
 				[size[3], sizeUnit[3]],
 			],
+			["block"]
 		],
 		final_css
 	);
@@ -188,6 +232,22 @@ function edit(props) {
 								initialOpen={true}
 								title={__('Main Settings', 'greenshiftaddon')}
 							>
+								<GsbpFormLabel
+									title={__("Select type", 'greenshiftaddon')}
+									clearFun={() => setAttributes({ selecttype: '' })}
+								/>
+								<div style={{ marginBottom: 15, clear: "both" }}>
+									<StylesforBlock columns={3} value={selecttype} onChange={val => setAttributes({ selecttype: val })}
+										options={[
+											{ value: 'regular', svg: rtransform, label: __('Transform', 'greenshiftaddon') },
+											{ value: 'stagger_transformations', svg: staggertransform, label: __('Stagger', 'greenshiftaddon') },
+											{ value: 'text_transformations', svg: ttransform, label: __('Inner Text', 'greenshiftaddon') },
+											{ value: 'svg_motion_path', svg: svgtransform, label: __('SVG Path', 'greenshiftaddon') },
+											{ value: 'svg_line_draw', svg: svgdraw, label: __('SVG draw', 'greenshiftaddon') },
+											{ value: 'svg_morph', svg: svgmorph, label: __('Svg morph', 'greenshiftaddon') },
+										]}
+									/>
+								</div>
 								<RadioAdvanced
 									label={''}
 									fluid={'yes'}
@@ -206,18 +266,18 @@ function edit(props) {
 								/>
 								<RadioAdvanced
 									value={align}
-									label={__('Title Align', 'greenshift')}
+									label={__('Title Align', 'greenshiftaddon')}
 									fluid={''}
 									onChange={(value) => { setAttributes({ align: value }) }}
 									options={[
-										{ icon: 'dashicon dashicons dashicons-editor-alignleft', value: 'left', title: __('Left', 'greenshift') },
-										{ icon: 'dashicon dashicons dashicons-editor-aligncenter', value: 'center', title: __('Center', 'greenshift') },
-										{ icon: 'dashicon dashicons dashicons-editor-alignright', value: 'right', title: __('Right', 'greenshift') },
+										{ icon: 'dashicon dashicons dashicons-editor-alignleft', value: 'flex-start', title: __('Left', 'greenshiftaddon') },
+										{ icon: 'dashicon dashicons dashicons-editor-aligncenter', value: 'center', title: __('Center', 'greenshiftaddon') },
+										{ icon: 'dashicon dashicons dashicons-editor-alignright', value: 'flex-end', title: __('Right', 'greenshiftaddon') },
 									]}
 								/>
 								<div className="gspb_row gspb_row--no-padding-col" style={{ marginTop: 15 }}>
 									<div className="gspb_row__col--6">
-										<div>{__("Greenshift color picker", 'greenshiftaddon')}</div>
+										<div>{__("Greenshift color", 'greenshiftaddon')}</div>
 									</div>
 									<div
 										className="gspb_row__col--6"
@@ -233,11 +293,11 @@ function edit(props) {
 								</div>
 								<div style={{ marginTop: 10 }}>
 									<div className="gspb_row gspb_row--no-padding-col">
-										<div className="gspb_row__col--7">
+										<div className="gspb_row__col--6">
 											<span className="gspb_inspector_property-title">
 												{__('Size', 'greenshiftaddon')}
 												<Devices
-													className="gspb_inspector_device-icons--small"
+													className="gspb_inspector_device-icons--small gspb_inspector_device-icons--nomargin"
 													onChange={() =>
 														setdevState(!devstate)
 													}
@@ -245,29 +305,14 @@ function edit(props) {
 											</span>
 										</div>
 										<div
-											className="gspb_row__col--5"
+											className="gspb_row__col--6"
 											style={{
 												justifyContent: 'space-between',
 											}}
 										>
 											<div>
-												<div
-													className="gspb_inspector_clear_btn--right"
-													style={{ marginLeft: 5 }}
-													onClick={() => {
-														let currentValue = size.slice();
-														currentValue[
-															deviceStateIndex
-														] = null;
-														setAttributes({
-															size: currentValue,
-														});
-													}}
-												>
-													<i className="rhicon rhi-undo" />
-												</div>
 												<CssUnits
-													units={['px', '%', 'vw']}
+													units={['px', '%', 'vw', 'em', 'rem']}
 													attribute={
 														sizeUnit[deviceStateIndex] ==
 															null
@@ -287,39 +332,80 @@ function edit(props) {
 
 											</div>
 										</div>
-										<div style={{ width: '100%' }}>
-											<RangeControl
-												value={
-													size[deviceStateIndex] == null
-														? ''
-														: size[deviceStateIndex]
-												}
-												onChange={(value) => {
-													let currentValue = size.slice();
-													currentValue[
-														deviceStateIndex
-													] = value;
-													setAttributes({
-														size: currentValue,
-													});
-												}}
-												trackColor='#2184f9'
-												min={
-													sizeUnit[deviceStateIndex] ==
-														'px'
-														? 10
-														: 1
-												}
-												max={
-													sizeUnit[deviceStateIndex] ==
-														'px'
-														? 1800
-														: 100
-												}
-											/>
+										<div className="gspb_row gspb_row--no-padding-col row-wide-range" style={{ width: '100%' }}>
+											<div className="gspb_row__col--11">
+												<RangeControl
+													value={
+														gspb_inherit_values(size, deviceStateIndex)
+													}
+													onChange={(value) => {
+														let currentValue = size.slice();
+														currentValue[
+															deviceStateIndex
+														] = value;
+														setAttributes({
+															size: currentValue,
+														});
+													}}
+													trackColor='#2184f9'
+													min={
+														sizeUnit[deviceStateIndex] ==
+															'px'
+															? 1
+															: 0.01
+													}
+													max={
+														sizeUnit[deviceStateIndex] ==
+															'px'
+															? 5000
+															: 1000
+													}
+													step={
+														sizeUnit[deviceStateIndex] ==
+															'px'
+															? 1
+															: 0.01
+													}
+												/>
+											</div>
+											<div className="gspb_row__col--1">
+												<div
+													className="gspb_inspector_clear_btn--right"
+													onClick={() => {
+														let currentValue = size.slice();
+														currentValue[
+															deviceStateIndex
+														] = null;
+														setAttributes({
+															size: currentValue,
+														});
+													}}
+												>
+													<i className="rhicon rhi-undo" />
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
+							</PanelBody>
+
+							<PanelBody initialOpen={false} title={__('Icon', 'greenshiftaddon')} className={`${!enableicon ? '' : 'gspb_panel_changed'}`}>
+								<>
+									<ToggleControl
+										checked={enableicon}
+										label={__("Enable icon?", "greenshiftwoo")}
+										onChange={(value) => setAttributes({ enableicon: value })}
+									/>
+									{enableicon &&
+
+										<IconPicker
+											icon={iconPiccker_object}
+											onChange={(icon) => {
+												setAttributes({ iconBox_icon: icon });
+											}}
+										/>
+									}
+								</>
 							</PanelBody>
 
 							<PanelBody
@@ -329,7 +415,7 @@ function edit(props) {
 							>
 								<Typography
 									attributeName="typography"
-									includegradient={false}
+									includegradient={true}
 									includeHoverlinks={true}
 									{...props}
 								/>
@@ -341,7 +427,7 @@ function edit(props) {
 								initialOpen={false}
 								className={`${isEqual(attributesDefault.spacing.default, props.attributes.spacing) ? '' : 'gspb_panel_changed'}`}
 							>
-								<Spacing attributeName="spacing" overflow={false} {...props} />
+								<Spacing attributeName="spacing" padding={true} margin={true} overflow={true} {...props} />
 							</PanelBody>
 							{ /* Background Settings */}
 							<PanelBody
@@ -372,6 +458,19 @@ function edit(props) {
 								className={`${isEqual(attributesDefault.shadow.default, props.attributes.shadow) ? '' : 'gspb_panel_changed'}`}
 							>
 								<Shadow attributeName="shadow" {...props} predefined={true} />
+							</PanelBody>
+
+							{ /* Width Settings */}
+							<PanelBody
+								title={__("Width and Height", 'greenshiftaddon')}
+								initialOpen={false}
+								className={`${isEqual(attributesDefault.blockWidth.default, props.attributes.blockWidth) ? '' : 'gspb_panel_changed'}`}
+							>
+								<BlockWidth
+									attributeName="blockWidth"
+									include={['height']}
+									{...props}
+								/>
 							</PanelBody>
 
 						</InspectorTab>
@@ -428,11 +527,15 @@ function edit(props) {
 			</BlockControls>
 			<AnimationWrapper attributes={attributes} props={props}>
 				<div
-					id={blockId}
-					className={blockClassName}
+					{...blockProps}
 					{...AnimationProps}
 				>
 					<span className="gspb_example_value">{customcolor}</span>
+					{enableicon &&
+						<span className="gspb_example_icon">
+							<IconViewer attributeName="iconBox_icon" size={16} color={"#565D66"} {...props} />
+						</span>
+					}
 					<style
 						dangerouslySetInnerHTML={{
 							__html: editor_css,

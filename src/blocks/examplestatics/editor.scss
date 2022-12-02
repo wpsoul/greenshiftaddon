@@ -1,0 +1,14 @@
+.gs-counterwrap{
+    display: flex;
+    align-items: center;
+    .gs-counterdiv {
+        display: flex;
+        text-align:center;
+        flex-direction: column;
+        .gs-counter {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+}
