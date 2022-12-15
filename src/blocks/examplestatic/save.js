@@ -8,10 +8,10 @@ function save(props) {
 		customcolor, id, animation, enableicon
 	} = props.attributes;
 
+	const {className} = props;
+
 	let blockId = `gspb_id-${id}`;
-	const blockProps = useBlockProps.save({
-		className: `gspb-examplebox ${blockId}`
-	});
+	let blockClassName = `gspb-examplebox ${blockId} ${className}`;
 
 	//Render Animation Properties
 	let AnimationProps = {};
@@ -19,7 +19,10 @@ function save(props) {
 
 	return (
 		<>
-			<div {...blockProps} {...AnimationProps}>
+			<div 					
+				id={blockId}
+				className={blockClassName} {...AnimationProps}
+			>
 				<span className="gspb_example_value">{customcolor}</span>
 				{enableicon &&
 					<span className="gspb_example_icon">

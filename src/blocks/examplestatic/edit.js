@@ -47,7 +47,7 @@ const { gspb_inherit_values } = gspblib.helpers;
 
 function edit(props) {
 
-	const { attributes, setAttributes, clientId } = props;
+	const { attributes, setAttributes, className, clientId } = props;
 	const {
 		id, csstransform, position, animation, spacing, responsive, shadow, border, background, typography, blockWidth,
 		customcolor, align, titleTag, iconBox_icon, enableicon, selecttype,
@@ -80,11 +80,8 @@ function edit(props) {
 
 	gspb_setBlockId(props);
 	let blockId = `gspb_id-${id}`;
+	let blockClassName = `gspb-examplebox ${blockId} ${className}`;
 	let css_selector_by_user = `.${blockId}`;
-
-	const blockProps = useBlockProps({
-		className: `gspb-examplebox ${blockId}`
-	});
 
 	//Render Animation Properties
 	let AnimationProps = {};
@@ -527,7 +524,8 @@ function edit(props) {
 			</BlockControls>
 			<AnimationWrapper attributes={attributes} props={props}>
 				<div
-					{...blockProps}
+					id={blockId}
+					className={blockClassName}
 					{...AnimationProps}
 				>
 					<span className="gspb_example_value">{customcolor}</span>
