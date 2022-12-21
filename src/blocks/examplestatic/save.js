@@ -11,7 +11,7 @@ function save(props) {
 	const {className} = props;
 
 	let blockId = `gspb_id-${id}`;
-	let blockClassName = `gspb-examplebox ${blockId} ${className}`;
+	let blockClassName = `gspb-examplebox ${blockId} ${(typeof className !== 'undefined' && className != 'undefined') ? className : ''}`;
 
 	//Render Animation Properties
 	let AnimationProps = {};

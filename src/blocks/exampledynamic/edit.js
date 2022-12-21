@@ -77,7 +77,7 @@ function edit(props) {
 
 	gspb_setBlockId(props);
 	let blockId = `gspb_id-${id}`;
-	let blockClassName = `gspb-examplebox ${blockId} ${className}`;
+	let blockClassName = `gspb-examplebox ${blockId} ${(typeof className !== 'undefined' && className != 'undefined') ? className : ''}`;
 	let css_selector_by_user = `#${blockId}`;
 
 	//Render Animation Properties
