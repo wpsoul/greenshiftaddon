@@ -11,3 +11,4 @@
 
 import './blocks/exampledynamic';
 import './blocks/examplestatic';
+import './blocks/exampleforquery';

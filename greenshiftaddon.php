@@ -5,7 +5,7 @@
  * Description: Extend your blocks with Greenshift high quality library and performance
  * Author: Wpsoul
  * Author URI: https://wpsoul.com
- * Version: 0.1
+ * Version: 0.2
  */
 
 // Exit if accessed directly.
@@ -114,6 +114,7 @@ if (!function_exists('greenShiftAddon_editor_assets')) {
 // Register server side functions
 //////////////////////////////////////////////////////////////////
 require_once GREENSHIFTADDON_DIR_PATH . 'blockrender/exampledynamic/block.php';
+require_once GREENSHIFTADDON_DIR_PATH .'blockrender/exampleforquery/block.php';
 
 //////////////////////////////////////////////////////////////////
 // Functions to render conditional scripts
