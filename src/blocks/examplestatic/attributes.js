@@ -96,5 +96,16 @@ export default {
     },
     selecttype: {
         type: 'string',
-    }  
+    },
+    tabDefault: {
+        type: 'object',
+        default: {
+            typography: collectionsObjects.typography,
+            background: collectionsObjects.background,
+            border: collectionsObjects.border,
+            csstransform: collectionsObjects.csstransform,
+            shadow: collectionsObjects.shadow,
+            spacing: collectionsObjects.spacing,
+        }
+    },
 };

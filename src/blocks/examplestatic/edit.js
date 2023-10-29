@@ -21,6 +21,7 @@ const {
 	Background,
 	IconPicker,
 	Typography,
+	StyleTabs,
 	InteractionsPanel,
 } = gspblib.collections;
 
@@ -38,6 +39,7 @@ const {
 	gspb_typography_cssGen,
 	getFinalCssFromDynamicLocalClasses,
 	getDataAttributesfromDynamic,
+	getFinalCssFromTabs,
 	gspb_Css_Final
 } = gspblib.utilities;
 const { InspectorTabs, InspectorTab, BlpgeColorPicker, RadioAdvanced, StylesforBlock, GsbpFormLabel, UnitControl, ResizalbeMarginBox } = gspblib.components;
@@ -46,6 +48,7 @@ const { AnimationWrapper, AnimationRenderProps } = gspblib.collections;
 const { gspb_getDeviceStateIndex } = gspblib.utilities;
 const { IconViewer } = gspblib.components;
 const { gspb_inherit_values } = gspblib.helpers;
+const { collectionsObjects } = gspblib.helpers;
 
 function edit(props) {
 
@@ -53,7 +56,7 @@ function edit(props) {
 	const {
 		id, csstransform, position, animation, spacing, responsive, shadow, border, background, typography, blockWidth,
 		customcolor, align, titleTag, iconBox_icon, enableicon, selecttype,
-		sizeCustom, interactionLayers
+		sizeCustom, interactionLayers, tabDefault
 
 	} = attributes;
 
@@ -223,6 +226,8 @@ function edit(props) {
 		final_css
 	);
 
+	final_css = getFinalCssFromTabs(tabDefault, css_selector_by_user, final_css);
+
 	final_css = getFinalCssFromDynamicLocalClasses(
 		props,
 		final_css
@@ -358,6 +363,61 @@ function edit(props) {
 												/>
 											</div>
 										</div>
+										<div style={{marginBottom: 10}}>
+											{__("Common component for design options", 'greenshiftaddon')}
+										</div>
+										<StyleTabs
+											typographyAttribute={tabDefault.typography || collectionsObjects.typography}
+											typographyTitle={__("Typography", 'greenshift-animation-and-page-builder-blocks')}
+											typographyDefault={collectionsObjects.typography}
+											typographyChange={
+												(value) => {
+													setNewTabAttributes(value, 'typography', 'tabDefault');
+												}
+											}
+											backgroundAttribute={tabDefault.background || collectionsObjects.background}
+											backgroundTitle={__("Background", 'greenshift-animation-and-page-builder-blocks')}
+											backgroundDefault={collectionsObjects.background}
+											backgroundChange={
+												(value) => {
+													setNewTabAttributes(value, 'background', 'tabDefault');
+												}
+											}
+											borderAttribute={tabDefault.border || collectionsObjects.border}
+											borderTitle={__("Border", 'greenshift-animation-and-page-builder-blocks')}
+											borderDefault={collectionsObjects.border}
+											borderChange={
+												(value) => {
+													setNewTabAttributes(value, 'border', 'tabDefault');
+												}
+											}
+											spacingAttribute={tabDefault.spacing || collectionsObjects.spacing}
+											spacingTitle={__("Spacing", 'greenshift-animation-and-page-builder-blocks')}
+											spacingDefault={collectionsObjects.spacing}
+											spacingChange={
+												(value) => {
+													setNewTabAttributes(value, 'spacing', 'tabDefault');
+												}
+											}
+											shadowAttribute={tabDefault.shadow || collectionsObjects.shadow}
+											shadowTitle={__("Shadow", 'greenshift-animation-and-page-builder-blocks')}
+											shadowDefault={collectionsObjects.shadow}
+											shadowChange={
+												(value) => {
+													setNewTabAttributes(value, 'shadow', 'tabDefault');
+												}
+											}
+											csstransformAttribute={tabDefault.csstransform || collectionsObjects.csstransform}
+											csstransformTitle={__("CSS transform", 'greenshift-animation-and-page-builder-blocks')}
+											csstransformDefault={collectionsObjects.csstransform}
+											csstransformChange={
+												(value) => {
+													setNewTabAttributes(value, 'csstransform', 'tabDefault');
+												}
+											}
+
+											{...props}
+										/>
 									</PanelBody>
 
 									<PanelBody initialOpen={false} title={__('Icon', 'greenshiftaddon')} className={`${!enableicon ? '' : 'gspb_panel_changed'}`}>
