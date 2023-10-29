@@ -19,6 +19,18 @@ export default {
     inlineCssStyles: {
         type: 'string',
     },
+    dynamicGClasses: {
+		type: "array",
+	},        
+    interactionLayers: {
+		type: "array",
+	},
+    stylebook_class: {
+		type: "string",
+	},
+	stylebook_attrs: {
+		type: "object",
+	},
     csstransform: {
         type: 'object',
         default: collectionsObjects.csstransform,
@@ -71,13 +83,9 @@ export default {
         type: 'string',
         default: '#ff0000',
     },
-    size: {
+    sizeCustom: {
         type: 'array',
-        default: [200],
-    },
-    sizeUnit: {
-        type: 'array',
-        default: ['px', 'px', 'px', 'px'],
+        default: ['200px'],
     },
     iconBox_icon: {
         type: 'object',
