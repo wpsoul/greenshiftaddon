@@ -40,6 +40,10 @@ class Renderbox{
 			'type'    => 'string',
 			'default' => '',
 		),
+		'interactionLayers' => array (
+			'type' => 'array',
+			'default' => array(),
+		)
 
 	);
 
@@ -47,9 +51,17 @@ class Renderbox{
 		extract($settings);
 
 		$blockId = 'gspb_id-'.$id;
-		$blockClassName = 'gspb-examplebox '.$blockId.' '.(!empty($className) ? $className : '').' ';
+		$blockClassName = 'gspb-examplebox '.$blockId;
 
-		$out = '<div id="'.$blockId.'" class="'.$blockClassName.'"'.gspb_AnimationRenderProps($animation).'>';
+		$data_attributes = gspb_getDataAttributesfromDynamic($settings);
+		$wrapper_attributes = get_block_wrapper_attributes(
+			array(
+				'class' => $blockClassName,
+				...$data_attributes
+			)
+		);
+
+		$out = '<div id="'.$blockId.'" '.$wrapper_attributes.' '.gspb_AnimationRenderProps($animation, $interactionLayers).'>';
 			$out .= '<span class="gspb_example_value">'.$customcolor.'</span>';
 		$out .='</div>';
 		return $out;

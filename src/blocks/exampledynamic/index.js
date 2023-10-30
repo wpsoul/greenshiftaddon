@@ -9,7 +9,7 @@ registerBlockType( 'greenshift-blocks/exampledynamic', {
     category: 'greenShiftAddon',
     icon: blockIcon,
     example: {},
-    title: __('Example Block', 'greenshiftaddon'),
+    title: __('Example Dynamic Block', 'greenshiftaddon'),
     description: __('Example block', 'greenshiftaddon'),
     keywords: [],
     attributes,

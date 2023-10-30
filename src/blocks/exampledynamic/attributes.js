@@ -5,6 +5,11 @@ const { collectionsObjects } = gspblib.helpers;
  * Set the block attributes
  * @type {Object}
  */
+const defaultIcon = JSON.parse(JSON.stringify(collectionsObjects.iconPicker));
+defaultIcon.icon.font = 'rhicon rhi-shopping-bag';
+defaultIcon.fill = 'currentColor';
+defaultIcon.fillhover = 'currentColor';
+defaultIcon.iconSize = [16];
 
 export default {
     id: {
@@ -14,6 +19,18 @@ export default {
     inlineCssStyles: {
         type: 'string',
     },
+    dynamicGClasses: {
+		type: "array",
+	},        
+    interactionLayers: {
+		type: "array",
+	},
+    stylebook_class: {
+		type: "string",
+	},
+	stylebook_attrs: {
+		type: "object",
+	},
     csstransform: {
         type: 'object',
         default: collectionsObjects.csstransform,
@@ -57,24 +74,38 @@ export default {
     align: {
         type: 'string',
         default: '',
-    },     
+    },
     titleTag: {
         type: 'string',
         default: '',
-    },     
+    },
     customcolor: {
         type: 'string',
         default: '#ff0000',
-    }, 
-    size: {
-        type: 'array',
-        default: [200],
     },
-    sizeUnit: {
+    sizeCustom: {
         type: 'array',
-        default: ['px', 'px', 'px', 'px' ],
-    },  
+        default: ['200px'],
+    },
+    iconBox_icon: {
+        type: 'object',
+        default: defaultIcon,
+    },
+    enableicon: {
+        type: 'boolean',
+    },
     selecttype: {
         type: 'string',
-    }  
+    },
+    tabDefault: {
+        type: 'object',
+        default: {
+            typography: collectionsObjects.typography,
+            background: collectionsObjects.background,
+            border: collectionsObjects.border,
+            csstransform: collectionsObjects.csstransform,
+            shadow: collectionsObjects.shadow,
+            spacing: collectionsObjects.spacing,
+        }
+    },
 };

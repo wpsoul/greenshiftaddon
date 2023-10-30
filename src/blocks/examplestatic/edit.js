@@ -366,6 +366,7 @@ function edit(props) {
 										<div style={{marginBottom: 10}}>
 											{__("Common component for design options", 'greenshiftaddon')}
 										</div>
+										{ /* you can set defaultTab="Typography" to make it opened by default */}
 										<StyleTabs
 											typographyAttribute={tabDefault.typography || collectionsObjects.typography}
 											typographyTitle={__("Typography", 'greenshift-animation-and-page-builder-blocks')}
