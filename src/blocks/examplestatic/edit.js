@@ -373,7 +373,9 @@ function edit(props) {
 											typographyDefault={collectionsObjects.typography}
 											typographyChange={
 												(value) => {
-													setNewTabAttributes(value, 'typography', 'tabDefault');
+													let newValue = JSON.parse(JSON.stringify(tabDefault));
+													newValue.typography = value;
+													setAttributes({ tabDefault: newValue });
 												}
 											}
 											backgroundAttribute={tabDefault.background || collectionsObjects.background}
@@ -381,7 +383,9 @@ function edit(props) {
 											backgroundDefault={collectionsObjects.background}
 											backgroundChange={
 												(value) => {
-													setNewTabAttributes(value, 'background', 'tabDefault');
+													let newValue = JSON.parse(JSON.stringify(tabDefault));
+													newValue.background = value;
+													setAttributes({ tabDefault: newValue });
 												}
 											}
 											borderAttribute={tabDefault.border || collectionsObjects.border}
@@ -389,7 +393,9 @@ function edit(props) {
 											borderDefault={collectionsObjects.border}
 											borderChange={
 												(value) => {
-													setNewTabAttributes(value, 'border', 'tabDefault');
+													let newValue = JSON.parse(JSON.stringify(tabDefault));
+													newValue.border = value;
+													setAttributes({ tabDefault: newValue });
 												}
 											}
 											spacingAttribute={tabDefault.spacing || collectionsObjects.spacing}
@@ -397,7 +403,9 @@ function edit(props) {
 											spacingDefault={collectionsObjects.spacing}
 											spacingChange={
 												(value) => {
-													setNewTabAttributes(value, 'spacing', 'tabDefault');
+													let newValue = JSON.parse(JSON.stringify(tabDefault));
+													newValue.spacing = value;
+													setAttributes({ tabDefault: newValue });
 												}
 											}
 											shadowAttribute={tabDefault.shadow || collectionsObjects.shadow}
@@ -405,7 +413,9 @@ function edit(props) {
 											shadowDefault={collectionsObjects.shadow}
 											shadowChange={
 												(value) => {
-													setNewTabAttributes(value, 'shadow', 'tabDefault');
+													let newValue = JSON.parse(JSON.stringify(tabDefault));
+													newValue.shadow = value;
+													setAttributes({ tabDefault: newValue });
 												}
 											}
 											csstransformAttribute={tabDefault.csstransform || collectionsObjects.csstransform}
@@ -413,7 +423,9 @@ function edit(props) {
 											csstransformDefault={collectionsObjects.csstransform}
 											csstransformChange={
 												(value) => {
-													setNewTabAttributes(value, 'csstransform', 'tabDefault');
+													let newValue = JSON.parse(JSON.stringify(tabDefault));
+													newValue.csstransform = value;
+													setAttributes({ tabDefault: newValue });
 												}
 											}
 
