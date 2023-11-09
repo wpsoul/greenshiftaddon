@@ -4,7 +4,7 @@ import { InspectorControls, AlignmentToolbar, BlockControls } from '@wordpress/b
 import { PanelBody, SelectControl, Spinner, ToggleControl, BaseControl } from '@wordpress/components';
 import { ProductSelect } from "../components/ProductSelect/ProductSelect";
 import { useSelect } from "@wordpress/data";
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import attributesDefault from './attributes';
 
 // Import greenshift dependencies

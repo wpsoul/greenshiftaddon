@@ -5,7 +5,7 @@
  * Description: Extend your blocks with Greenshift high quality library and performance
  * Author: Wpsoul
  * Author URI: https://wpsoul.com
- * Version: 0.2
+ * Version: 0.3
  */
 
 // Exit if accessed directly.
@@ -19,7 +19,7 @@ define('GREENSHIFTADDON_DIR_PATH', plugin_dir_path(__FILE__));
 
 /* Costants */
 if (!defined('GREENSHIFTADDON_PLUGIN_VER')) {
-	define('GREENSHIFTADDON_PLUGIN_VER', '0.1');
+	define('GREENSHIFTADDON_PLUGIN_VER', '0.3');
 }
 
 function gspb_greenShiftAddon_is_parent_active()

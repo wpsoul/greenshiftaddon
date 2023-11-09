@@ -11,7 +11,7 @@ import apiFetch from '@wordpress/api-fetch';
  * External dependencies
  */
 import debounce from "debounce-promise";
-import {trim} from 'lodash';
+import trim from 'lodash/trim';
 import AsyncSelect from 'react-select/async';
 
 function mapPosts(posts) {

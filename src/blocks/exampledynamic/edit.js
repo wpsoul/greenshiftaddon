@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { InspectorControls, AlignmentToolbar, BlockControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { rtransform, ttransform, svgtransform, svgdraw, staggertransform, svgmorph, batchicon } from "./icons.js";
 import attributesDefault from './attributes';
 
